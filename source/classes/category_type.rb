@@ -1,18 +1,17 @@
 ##
-# Esta classe será responsável por guardar os serviços que ficarão na fila esperando serem processados
-class Job
+# Esta classe será responsável por guardar os tipos de categorias possíveis
+class CategoryType
 
-  attr_reader :id, :category_type, :priority
+  @@number_of_categories = 0
 
-  def initialize(id, category_type, priority)
+  attr_reader :name
+
+  def initialize(name)
     # Securing class
-    raise ArgumentError, "Wrong id format > Expected String, got (#{id.class.name})" unless id.is_a? String
-    raise ArgumentError, "Wrong category_type format > Expected String, got (#{category_type.class.name})" unless id.is_a? CategoryType
-    raise ArgumentError, "Wrong priority format > Expected String, got (#{priority.class.name})" unless id.is_a?(TrueClass) || id.is_a?(FalseClass)
+    raise ArgumentError, "wrong name format (expected String, got #{id.class.name})" unless id.is_a? String
     # Saving attr
-    @id = id
-    @category_type = category_type
-    @priority = priority
+    @name = name
+    @@number_of_categories += 1
     # Returning class
     self
   end
