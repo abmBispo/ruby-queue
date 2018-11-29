@@ -17,4 +17,16 @@ class Job
     self
   end
 
+  def to_s
+    "id: #{id}(#{id.class.name}), category_type: #{category_type.to_s}(#{category_type.class.name}), priority: #{priority}(#{priority.class.name})"
+  end
+
+  def to_json
+    {
+      id: id,
+      category_type: category_type.to_json,
+      priority: priority
+    }
+  end
+
 end

@@ -16,4 +16,14 @@ class CategoryType
     self
   end
 
+  def to_s
+    "name: #{name}"
+  end
+
+  def to_json
+    {
+      name: name
+    }
+  end
+
 end
