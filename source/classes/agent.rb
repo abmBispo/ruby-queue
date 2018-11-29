@@ -1,11 +1,11 @@
 ##
-# Esta classe será responsável por guardar os serviços que ficarão na fila esperando serem processados
-class Job
+# Esta classe será responsável por processar os serviços que ficarão em espera na fila
+class Agent
 
   ##
   # Attributos
 
-  @@number_of_jobs = 0
+  @@number_of_agents = 0
   attr_reader :id, :category_type, :priority
 
   ##
