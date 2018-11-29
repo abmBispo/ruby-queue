@@ -7,8 +7,8 @@ class Job
   def initialize(id, category_type, priority)
     # Securing class
     raise ArgumentError, "wrong id format (expected String, got #{id.class.name})" unless id.is_a? String
-    raise ArgumentError, "wrong category_type format (expected String, got #{category_type.class.name})" unless id.is_a? CategoryType
-    raise ArgumentError, "wrong priority format (expected String, got #{priority.class.name})" unless id.is_a?(TrueClass) || id.is_a?(FalseClass)
+    raise ArgumentError, "wrong category_type format (expected CategoryType, got #{category_type.class.name})" unless category_type.is_a? CategoryType
+    raise ArgumentError, "wrong priority format (expected boolean, got #{priority.class.name})" unless priority.is_a?(TrueClass) || priority.is_a?(FalseClass)
     # Saving attr
     @id = id
     @category_type = category_type
