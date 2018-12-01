@@ -6,20 +6,22 @@ class Agent
   # Attributos
 
   @@number_of_agents = 0
-  attr_reader :id, :category_type, :priority
+  attr_reader :id, :primary_skill_set, :secondary_skill_set
 
   ##
   # Inicialização
 
-  def initialize(id, category_type, priority)
+  def initialize(id, primary_skill_set, secondary_skill_set)
     # Securing class
     raise ArgumentError, "wrong id format (expected String, got #{id.class.name})" unless id.is_a? String
-    raise ArgumentError, "wrong category_type format (expected CategoryType, got #{category_type.class.name})" unless category_type.is_a? CategoryType
-    raise ArgumentError, "wrong priority format (expected boolean, got #{priority.class.name})" unless priority.is_a?(TrueClass) || priority.is_a?(FalseClass)
+    raise ArgumentError, "wrong primary_skill_set format (expected Array, got #{primary_skill_set.class.name})" unless primary_skill_set.is_a?(Array)
+    raise ArgumentError, "wrong type inside primary_skill_set (expected CategoryType, got #{primary_skill_set.first.class.name})" unless primary_skill_set.first.is_a?(CategoryType) || primary_skill_set.first.nil?
+    raise ArgumentError, "wrong secondary_skill_set format (expected Array, got #{secondary_skill_set.class.name})" unless secondary_skill_set.is_a?(Array)
+    raise ArgumentError, "wrong type inside primary_skill_set (expected CategoryType, got #{secondary_skill_set.first.class.name})" unless secondary_skill_set.first.is_a?(CategoryType) || secondary_skill_set.first.nil?
     # Saving attr
     @id = id
-    @category_type = category_type
-    @priority = priority
+    @primary_skill_set = primary_skill_set
+    @secondary_skill_set = secondary_skill_set
     # Returning class
     self
   end
@@ -29,14 +31,14 @@ class Agent
   # Métodos de ajuda
 
   def to_s
-    "id: #{id} (#{id.class.name}), category_type: #{category_type.to_s} (#{category_type.class.name}), priority: #{priority} (#{priority.class.name})"
+    "id: #{id} (#{id.class.name}), primary_skill_set: #{primary_skill_set.map{|i| i.to_s }} (#{primary_skill_set.class.name}), secondary_skill_set: #{secondary_skill_set.map{|i| i.to_s }} (#{secondary_skill_set.class.name})"
   end
 
   def to_json
     {
       id: id,
-      category_type: category_type.to_json,
-      priority: priority
+      primary_skill_set: primary_skill_set,
+      secondary_skill_set: secondary_skill_set
     }
   end
 
