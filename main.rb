@@ -1,25 +1,36 @@
 # Requires for load classes
-require_relative 'source/classes/category_type'
+require 'json'
 require_relative 'source/classes/agent'
 require_relative 'source/classes/job'
+require_relative 'source/classes/ruby_queue'
 
-# Creating categories
-category_type_1 = CategoryType.new('rewards_question')
-category_type_2 = CategoryType.new('bills_question')
+# Reading from STDIN
+stdin = ARGF.read
+parsed_input = JSON.parse(stdin)
 
-# Creating jobs
-job_1 = Job.new('f26e890b-df8e-422e-a39c-7762aa0bac36', category_type_1, false)
-job_2 = Job.new('c0033410-981c-428a-954a-35dec05ef1d2', category_type_2, true)
+# Instanciating queue
+queue = RubyQueue.new
 
-# Creating agents
-agent_1 = Agent.new('8ab86c18-3fae-4804-bfd9-c3d6e8f66260', [category_type_1], [])
-agent_2 = Agent.new('ed0e23ef-6c2b-430c-9b90-cd4f1ff74c88', [category_type_2], [category_type_1])
+# Reading inputs
+parsed_input.each do |individual_command|
+  individual_command.each do |command, params|
+    case command
+    when 'new_agent'
+      queue.agents << Agent.new(params['id'], params['name'], params['primary_skillset'], params['secondary_skillset'])
+    when 'new_job'
+      queue.jobs << Job.new(params['id'], params['type'], params['urgent'])
+    when 'job_request'
+      queue.dequeue(params['agent_id'])
+    end
+  end
+end
 
 # Testing
-puts job_1.to_s
-puts job_2.to_s
-puts agent_1.to_s
-puts agent_2.to_s
-puts CategoryType.number_of_categories
-
-# 
+puts "****************************"
+puts "Created agents"
+puts "****************************"
+puts queue.agents
+puts "****************************"
+puts "Created jobs"
+puts "****************************"
+puts queue.jobs
