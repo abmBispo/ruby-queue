@@ -32,6 +32,10 @@ class Job
     "id: #{id} (#{id.class.name}), category_type: #{category_type.to_s} (#{category_type.class.name}), priority: #{priority} (#{priority.class.name})"
   end
 
+  def urgent?
+    priority
+  end
+
   def to_json
     {
       id: id,
