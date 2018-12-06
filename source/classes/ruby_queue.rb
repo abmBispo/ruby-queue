@@ -30,24 +30,26 @@ class RubyQueue
     secondary_skillset = agent.secondary_skill_set
 
     # Filtering jobs by job type and agent skills for primary skillset
-    primary_skillset.reverse.each do |skill|
+    primary_skillset.each do |skill|
       best_job = @jobs.select { |job| job.category_type == skill }.first
+      break unless best_job.nil?
     end
-
-    # Update class variables
-    @@last_used_agent ||= agent
-    @@last_assigned_job ||= best_job
 
     # This happens if no job can match to the agent's primary skillset
     # So it filters  jobs by job type and agent skills for secondary skillset
     unless best_job
-      secondary_skillset.reverse.each do |skill|
+      secondary_skillset.each do |skill|
         regular_job = @jobs.select { |job| job.category_type == skill }.first
+        break unless regular_job.nil?
       end
     end
 
+    # Update class variables
+    @@last_used_agent ||= agent
+    @@last_assigned_job ||= best_job || regular_job
+
     # Returning
-    best_job || regular_job
+    @jobs.delete(best_job || regular_job)
   end
 
   private
