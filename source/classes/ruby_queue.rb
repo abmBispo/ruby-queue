@@ -1,9 +1,6 @@
+##
+# RubyQueue class responsible for main code execution, handling with agents and jobs
 class RubyQueue
-
-  # Class variables
-  @@last_used_agent = nil
-  @@last_assigned_job = nil
-
   # Instance variables
   attr_accessor :jobs, :agents
   attr_reader :assigned_jobs
@@ -11,23 +8,27 @@ class RubyQueue
   def initialize(jobs = [], agents = [])
     @jobs = jobs
     @agents = agents
+    # Calling private method for order jobs in priority level
+    priorize_jobs
   end
+
+  def new_job; end
+
+  def new_agent; end
 
   def dequeue(agent_id = '')
     # Defining variables
     best_job = nil
     regular_job = nil
-    # Calling private method for order jobs in priority level
-    priorize_jobs
     # Getting agent from agent_id param
-    agent = @agents.select { |agent| agent.id == agent_id }.first
+    selected_agent = @agents.select { |agent| agent.id == agent_id }.first
 
     # Raise if agent_id params does not refer to any agent in queue
     raise ArgumentError, 'agent_id not found' if agent.nil?
 
     # Catching agent's skillsets
-    primary_skillset = agent.primary_skill_set
-    secondary_skillset = agent.secondary_skill_set
+    primary_skillset = selected_agent.primary_skill_set
+    secondary_skillset = selected_agent.secondary_skill_set
 
     # Filtering jobs by job type and agent skills for primary skillset
     primary_skillset.each do |skill|
@@ -44,10 +45,6 @@ class RubyQueue
       end
     end
 
-    # Update class variables
-    @@last_used_agent ||= agent
-    @@last_assigned_job ||= best_job || regular_job
-
     # Returning
     @jobs.delete(best_job || regular_job)
   end
@@ -62,5 +59,4 @@ class RubyQueue
       @jobs.unshift job
     end
   end
-
 end
