@@ -1,6 +1,7 @@
 # ruby-queue
 
 [![CodeFactor](https://www.codefactor.io/repository/github/abmbispo/ruby-queue/badge/master)](https://www.codefactor.io/repository/github/abmbispo/ruby-queue/overview/master)
+[![CircleCI](https://circleci.com/gh/abmBispo/ruby-queue.svg?style=svg)](https://circleci.com/gh/abmBispo/ruby-queue)
 
 Este desafio consiste em desenvolver uma versão simplificada de uma "job queue" (fila de tarefas, em tradução livre).
 A fila possui duas entidades: *jobs* (tarefas) e *agents* (agentes).
