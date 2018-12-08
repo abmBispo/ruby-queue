@@ -22,12 +22,12 @@ parsed_input.each do |individual_command|
     # Selecting each option
     case command.to_sym
     when :new_agent
-      queue.agents << Agent.new(params[:id],
+      queue.new_agent Agent.new(params[:id],
                                 params[:name],
                                 params[:primary_skillset],
                                 params[:secondary_skillset])
     when :new_job
-      queue.jobs << Job.new(params[:id], params[:type], params[:urgent])
+      queue.new_job Job.new(params[:id], params[:type], params[:urgent])
     when :job_request
       job = queue.dequeue(params[:agent_id])
       next if job.nil?

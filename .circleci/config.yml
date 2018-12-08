@@ -19,8 +19,7 @@ jobs:
       - run:
           name: test
           command: |
-            rspec spec/spec_job.rb
-            rspec spec/spec_agent.rb
+            rspec spec/*
       - store_test_results:
           path: /tmp/test-results
       - store_artifacts:

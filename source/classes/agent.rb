@@ -8,10 +8,10 @@ class Agent
   ##
   # Initialization
 
-  def initialize(id, name, primary_skill_set, secondary_skill_set)
+  def initialize(id, name = '', primary_skill_set, secondary_skill_set)
     # Securing class
     raise ArgumentError, "wrong id format (expected String, got #{id.class.name})" unless id.is_a? String
-    raise ArgumentError, "wrong name format (expected String, got #{id.class.name})" unless name.is_a? String
+    raise ArgumentError, "wrong name format (expected String, got #{name.class.name})" unless name.is_a? String
     unless primary_skill_set.is_a?(Array)
       raise ArgumentError, "wrong primary_skill_set format (expected Array, got #{primary_skill_set.class.name})"
     end

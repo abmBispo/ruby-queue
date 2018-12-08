@@ -8,13 +8,19 @@ class RubyQueue
   def initialize(jobs = [], agents = [])
     @jobs = jobs
     @agents = agents
-    # Calling private method for order jobs in priority level
-    priorize_jobs
   end
 
-  def new_job; end
+  def new_job(job)
+    raise Exception unless job.is_a? Job
 
-  def new_agent; end
+    job.priority ? priorize_jobs(job) : @jobs << job
+  end
+
+  def new_agent(agent)
+    raise Exception unless agent.is_a? Agent
+
+    @agents << agent
+  end
 
   def dequeue(agent_id = '')
     # Defining variables
@@ -24,7 +30,7 @@ class RubyQueue
     selected_agent = @agents.select { |agent| agent.id == agent_id }.first
 
     # Raise if agent_id params does not refer to any agent in queue
-    raise ArgumentError, 'agent_id not found' if agent.nil?
+    raise ArgumentError, 'agent_id not found' if selected_agent.nil?
 
     # Catching agent's skillsets
     primary_skillset = selected_agent.primary_skill_set
@@ -51,12 +57,12 @@ class RubyQueue
 
   private
 
-  def priorize_jobs
-    @jobs.each do |job|
-      next unless job.urgent?
+  def priorize_jobs(new_job)
+    @jobs.each_with_index do |job, index|
+      next if job.priority
 
-      @jobs.delete job
-      @jobs.unshift job
+      @jobs.insert(index, new_job)
+      break
     end
   end
 end
