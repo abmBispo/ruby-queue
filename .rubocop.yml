@@ -2,7 +2,7 @@ Metrics/LineLength:
   Max: 140
 AllCops:
   Exclude:
-    - 'spec/*.rb'
+    - 'spec/*'
     - 'Gemfile'
 MethodLength:
   Max: 35
